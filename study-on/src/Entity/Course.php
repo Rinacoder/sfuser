@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=CourseRepository::class)
  */
-/**[UniqueEntity('Character_code')]*/
+/**[UniqueEntity('CharacterCode')]*/
 class Course
 {
     /**
@@ -27,7 +27,7 @@ class Course
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Character_code;
+    private $CharacterCode;
 
     /**
      * @ORM\Column( type="string", length=255, unique=true)
@@ -56,12 +56,12 @@ class Course
 
     public function getCharacterCode(): ?string
     {
-        return $this->Character_code;
+        return $this->CharacterCode;
     }
 
-    public function setCharacterCode(string $Character_code): self
+    public function setCharacterCode(string $CharacterCode): self
     {
-        $this->Character_code = $Character_code;
+        $this->CharacterCode = $CharacterCode;
 
         return $this;
     }

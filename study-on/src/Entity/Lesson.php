@@ -31,12 +31,12 @@ class Lesson
     /**
      * @ORM\Column(type="text")
      */
-    private $Lesson_content;
+    private $Content;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Lesson_Number;
+    private $LessonNumber;
 
     public function getId(): ?int
     {
@@ -69,24 +69,24 @@ class Lesson
 
     public function getLessonContent(): ?string
     {
-        return $this->Lesson_content;
+        return $this->Content;
     }
 
-    public function setLessonContent(string $Lesson_content): self
+    public function setLessonContent(string $Content): self
     {
-        $this->Lesson_content = $Lesson_content;
+        $this->Content = $Content;
 
         return $this;
     }
 
     public function getLessonNumber(): ?int
     {
-        return $this->Lesson_Number;
+        return $this->LessonNumber;
     }
 
-    public function setLessonNumber(int $Lesson_Number): self
+    public function setLessonNumber(int $LessonNumber): self
     {
-        $this->Lesson_Number = $Lesson_Number;
+        $this->LessonNumber = $LessonNumber;
 
         return $this;
     }

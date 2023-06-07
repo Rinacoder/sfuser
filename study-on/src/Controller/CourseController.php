@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Course;
 use App\Entity\Lesson;
-use App\Form\Course1Type;
+use App\Form\CourseType;
 use App\Form\LessonType;
 use App\Repository\CourseRepository;
 
@@ -29,6 +29,29 @@ class CourseController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}/new_lesson", name="app_lesson_new", methods={"GET", "POST"})
+     */
+    public function newLesson(Request $request, Course $course, ManagerRegistry $doctrine): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $lesson = new Lesson();
+        $lesson->setCourse($course);
+        $form = $this->createForm(LessonType::class, $lesson);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->getRepository(Lesson::class)->add($lesson, true);
+
+            return $this->redirectToRoute('app_course_show', ['id' => $course->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('lesson/new.html.twig', [
+            'lesson' => $lesson,
+            'form' => $form->createView(),
+        ]);
+    }
+
 
     /**
      * @Route("/new", name="app_course_new", methods={"GET", "POST"})
@@ -36,7 +59,7 @@ class CourseController extends AbstractController
     public function new(Request $request, CourseRepository $courseRepository): Response
     {
         $course = new Course();
-        $form = $this->createForm(Course1Type::class, $course);
+        $form = $this->createForm(CourseType::class, $course);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -66,7 +89,7 @@ class CourseController extends AbstractController
      */
     public function edit(Request $request, Course $course, CourseRepository $courseRepository): Response
     {
-        $form = $this->createForm(Course1Type::class, $course);
+        $form = $this->createForm(CourseType::class, $course);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
