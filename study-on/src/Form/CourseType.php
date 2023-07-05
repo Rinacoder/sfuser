@@ -19,11 +19,11 @@ class CourseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Character_code',TextType::class, [
+            ->add('CharacterCode',TextType::class, [
                 'label' => 'Код курса',
                 'required' => true,
                 'constraints' => [
-                    new NotBlank(['message' => 'Код курса не должно быть пустым']),
+                    new NotBlank(['message' => 'Код курса не должен быть пустым']),
                     new Length([
                         'max' => 255,
                         'maxMessage' => 'Код курса не может содержать более {{ limit }} символов']),
@@ -40,7 +40,7 @@ class CourseType extends AbstractType
                     new NotBlank(['message' => 'Название курса не должно быть пустым']),
                     new Length([
                         'max' => 255,
-                        'maxMessage' => 'Название  курса не может содержать более {{ limit }} символов']),
+                        'maxMessage' => 'Название курса не может содержать более {{ limit }} символов']),
                 ],
                 'attr' => [
                     'placeholder' => 'Укажите название курса',

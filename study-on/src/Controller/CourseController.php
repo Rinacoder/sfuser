@@ -58,7 +58,9 @@ class CourseController extends AbstractController
      */
     public function new(Request $request, CourseRepository $courseRepository): Response
     {
+
         $course = new Course();
+
         $form = $this->createForm(CourseType::class, $course);
         $form->handleRequest($request);
 
@@ -95,7 +97,9 @@ class CourseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $courseRepository->add($course, true);
 
-            return $this->redirectToRoute('app_course_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_course_show', [
+                'id' => $course->getId()
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('course/edit.html.twig', [

@@ -3,28 +3,39 @@
 {% block title %}{{ course.Name }}{% endblock %}
 
 {% block body %}
-    <h1>{{ course.Name }}</h1>
+    <div class="container">
+        <h1>{{ course.Name }}</h1>
 
-    <p>{{ course.Description }}</p>
+        <p>{{ course.Description }}</p>
+        <h3>Уроки</h3>
+        {% for lesson in course.lessons %}
 
-    {% for lesson in course.lessons %}
+            <a href="{{ path('app_lesson_show', {'id': lesson.id}) }}" class="text-decoration-none text-black"><p>{{ lesson.LessonNumber }}. {{ lesson.Title }}</p></a>
 
-        <a href="{{ path('app_lesson_show', {'id': lesson.id}) }}"><h2>{{ lesson.LessonNumber }} {{ lesson.Title }}</h2></a>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
 
-    {% else %}
-        <tr>
-            <td colspan="5">no records found</td>
-        </tr>
-    {% endfor %}
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="d-flex">
+                <a href="{{ path('app_course_index') }} " class="btn btn-outline-secondary" role="button">К списку курсов</a>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+
+                <a href="{{ path('app_course_edit', {'id': course.id}) }}" class="btn  btn-outline-secondary" role="button">Редактировать</a>
+
+                {{ include('course/_delete_form.html.twig') }}
+
+                <a href="{{ path('app_lesson_new', {'id': course.id}) }}" class="btn btn-outline-secondary" role="button">Добавить урок</a>
+                {% endif %}
+
+            </div>
+        </footer>
 
 
-    <a href="{{ path('app_course_index') }}">Вернуться к списку курсов</a>
-
-    <a href="{{ path('app_course_edit', {'id': course.id}) }}">Редактировать курс</a>
-
-    <a href="{{ path('app_lesson_new', {'id': course.id}) }}">Создать новый урок</a>
 
 
 
-    {{ include('course/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
